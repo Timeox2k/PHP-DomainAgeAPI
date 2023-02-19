@@ -6,5 +6,7 @@ if (isset($_GET["domain"])) {
     $domainName = strtolower(htmlspecialchars($_GET["domain"]));
     $domainAge = new DomainAge($domainName);
     $domainAge->getDomainAge();
+} else {
+    echo "Error: The 'domain' parameter is missing from the URL. Please include a valid domain name to check its age.";
 }
 

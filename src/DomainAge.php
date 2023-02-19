@@ -8,7 +8,6 @@ use Iodev\Whois\Factory;
 
 class DomainAge
 {
-
     public String $domainName;
 
     public function __construct($domainName) {

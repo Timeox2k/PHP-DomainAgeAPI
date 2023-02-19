@@ -8,10 +8,18 @@ use Iodev\Whois\Factory;
 
 class DomainAge
 {
-    public function getDomainAge($domainName)
+
+    public String $domainName;
+
+    public function __construct($domainName) {
+        $this->domainName = $domainName;
+    }
+
+    public function getDomainAge()
     {
+        $domainName = $this->domainName;
         $stmt = Database::getInstance()->prepare("SELECT * FROM domain_data where name = :name LIMIT 1");
-        $stmt->bindParam(":name", $domainName);
+        $stmt->bindParam(":name", $this->domainName);
         $stmt->execute();
         $domainCount = $stmt->rowCount();
         $databaseDomainData = $stmt->fetch();
@@ -45,8 +53,9 @@ class DomainAge
 
     }
 
-    private function storeToDatabase($domainName, $timestamp)
+    private function storeToDatabase($timestamp)
     {
+        $domainName = $this->domainName;
         require_once('Database.php');
         $entryTime = time();
         $stmt = Database::getInstance()->prepare("SELECT * FROM domain_data where name = :name LIMIT 1");

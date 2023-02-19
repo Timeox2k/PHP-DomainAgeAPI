@@ -1,5 +1,5 @@
 <?php
-
+require './vendor/autoload.php';
 if (!class_exists("Database")) {
     class Database
     {

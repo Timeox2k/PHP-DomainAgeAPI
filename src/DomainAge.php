@@ -1,4 +1,5 @@
 <?php
+namespace TimeoxTwok\DomainAgeApi;
 
 use Iodev\Whois\Exceptions\ConnectionException;
 use Iodev\Whois\Exceptions\ServerMismatchException;
@@ -7,10 +8,8 @@ use Iodev\Whois\Factory;
 
 class DomainAge
 {
-
     public static function getDomainAge($domainName)
     {
-        require_once('Database.php');
         $stmt = Database::getInstance()->prepare("SELECT * FROM domain_data where name = :name LIMIT 1");
         $stmt->bindParam(":name", $domainName);
         $stmt->execute();
@@ -32,7 +31,7 @@ class DomainAge
             $response = $whois->loadDomainInfo($domainName);
 
             $timestamp = $response->creationDate > 0 ? $response->creationDate : $response->updatedDate;
-            
+
             if ($timestamp > 10) {
                 self::storeToDatabase($domainName, $timestamp);
                 self::output($timestamp);

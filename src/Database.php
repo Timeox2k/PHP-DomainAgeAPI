@@ -1,6 +1,5 @@
 <?php
-require './vendor/autoload.php';
-if (!class_exists("Database")) {
+namespace TimeoxTwok\DomainAgeApi;
     class Database
     {
         private static ?Database $instance = null;
@@ -39,6 +38,4 @@ if (!class_exists("Database")) {
         {
             return $this->mysql->prepare($query);
         }
-
-    }
 }

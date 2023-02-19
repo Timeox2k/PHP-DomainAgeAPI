@@ -1,6 +1,12 @@
 {
     "require": {
         "io-developer/php-whois": "^4.1",
-        "vlucas/phpdotenv": "^5.5"
+        "vlucas/phpdotenv": "^5.5",
+      "ext-json": "*"
+    },
+  "autoload": {
+    "psr-4": {
+      "TimeoxTwok\\DomainAgeApi\\": "src/"
     }
+  }
 }

@@ -1,5 +1,6 @@
 <?php
 
+error_reporting(0);
 use Iodev\Whois\Factory;
 
 require './vendor/autoload.php';
@@ -46,7 +47,7 @@ if (isset($_GET["domain"])) {
             $stmt->execute();
         }
     } catch (Exception $e) {
-        echo $e->getMessage();
+        echo "Domain not found. / Something went wrong.";
     }
 
 

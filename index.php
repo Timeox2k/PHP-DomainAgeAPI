@@ -63,5 +63,4 @@ function output($data, $code = 200)
         "message" => $data
     ];
     echo json_encode($json);
-    die();
 }

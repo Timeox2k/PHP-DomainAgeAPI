@@ -1,5 +1,6 @@
 <?php
 
+use Iodev\Whois\Exceptions\WhoisException;
 use Iodev\Whois\Factory;
 
 class DomainAge
@@ -41,7 +42,7 @@ class DomainAge
                 self::output('WHOIS does not provide any Information about the creation- or update- Date', 404);
             }
 
-        } catch (Exception $e) {
+        } catch (WhoisException $e) {
             self::output('Domain not found. / Something went wrong', 404);
         }
 

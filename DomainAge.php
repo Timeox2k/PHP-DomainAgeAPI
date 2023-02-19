@@ -31,12 +31,8 @@ class DomainAge
         try {
             $response = $whois->loadDomainInfo($domainName);
 
-            if (!$response->creationDate) {
-                $timestamp = $response->creationDate;
-            } else {
-                $timestamp = $response->updatedDate;
-            }
-
+            $timestamp = $response->creationDate > 0 ? $response->creationDate : $response->updatedDate;
+            
             if ($timestamp > 10) {
                 self::storeToDatabase($domainName, $timestamp);
                 self::output($timestamp);
@@ -46,7 +42,7 @@ class DomainAge
 
         } catch (WhoisException|ConnectionException|ServerMismatchException $e) {
             self::output('Domain not found. / Something went wrong', 404);
-        } 
+        }
 
     }
 

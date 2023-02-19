@@ -20,7 +20,7 @@ if (isset($_GET["domain"])) {
         $time30DaysAgo = strtotime('-30 days');
 
         if ($databaseEntryTime < $time30DaysAgo) {
-            echo $databaseDomainData["age"];
+            output($databaseDomainData["age"]);
             exit;
         }
     }
@@ -34,7 +34,7 @@ if (isset($_GET["domain"])) {
         } else {
             $timestamp = $response->updatedDate;
         }
-        echo $timestamp;
+        output($databaseDomainData["age"]);
         $entryTime = time();
         if ($domainCount == 1) {
             $stmt = Database::getInstance()->prepare("UPDATE domain_data SET age = ?, entryTime = ? WHERE name = ? LIMIT 1");
@@ -47,8 +47,19 @@ if (isset($_GET["domain"])) {
             $stmt->execute();
         }
     } catch (Exception $e) {
-        echo "Domain not found. / Something went wrong.";
+        output('Domain not found. / Something went wrong', 500);
     }
 
+}
 
+function output($data, $code = 200) {
+    http_response_code($code);
+    header("Content-Type: application/json");
+    $json = [
+        "code" => $code,
+        "success" => $code === 200,
+        "message" => $data
+    ];
+    echo json_encode($json);
+    die();
 }

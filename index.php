@@ -1,6 +1,7 @@
 <?php
 
 error_reporting(0);
+
 use Iodev\Whois\Factory;
 
 require './vendor/autoload.php';
@@ -52,7 +53,8 @@ if (isset($_GET["domain"])) {
 
 }
 
-function output($data, $code = 200) {
+function output($data, $code = 200)
+{
     http_response_code($code);
     header("Content-Type: application/json");
     $json = [

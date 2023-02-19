@@ -15,9 +15,9 @@ if (isset($_GET["domain"])) {
     $domainCount = $stmt->rowCount();
     $databaseDomainData = $stmt->fetch();
 
-    if ($domainCount == 1) {
+    if ($domainCount === 1) {
         $databaseEntryTime = strtotime($databaseDomainData["entryTime"]);
-        $time30DaysAgo = strtotime('-4 weeks');
+        $time30DaysAgo = strtotime('-30 days');
 
         if ($databaseEntryTime < $time30DaysAgo) {
             echo $databaseDomainData["age"];
@@ -29,7 +29,7 @@ if (isset($_GET["domain"])) {
     try {
         $response = $whois->loadDomainInfo($domainName);
 
-        if ($response->creationDate != null) {
+        if (!$response->creationDate) {
             $timestamp = $response->creationDate;
         } else {
             $timestamp = $response->updatedDate;

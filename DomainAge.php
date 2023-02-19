@@ -19,7 +19,7 @@ class DomainAge
             $time30DaysAgo = strtotime('-30 days');
 
             if ($databaseEntryTime < $time30DaysAgo) {
-                output($databaseDomainData["age"]);
+                self::output($databaseDomainData["age"]);
                 exit;
             }
         }

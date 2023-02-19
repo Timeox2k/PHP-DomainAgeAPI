@@ -5,7 +5,6 @@ use Iodev\Whois\Factory;
 require './vendor/autoload.php';
 require($_SERVER['DOCUMENT_ROOT'] . "/database.php");
 
-
 if (isset($_GET["domain"])) {
     $domainName = htmlspecialchars($_GET["domain"]);
 

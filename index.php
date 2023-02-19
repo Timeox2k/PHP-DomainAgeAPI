@@ -6,7 +6,7 @@ require './vendor/autoload.php';
 require($_SERVER['DOCUMENT_ROOT'] . "/database.php");
 
 if (isset($_GET["domain"])) {
-    $domainName = htmlspecialchars($_GET["domain"]);
+    $domainName = strtolower(htmlspecialchars($_GET["domain"]));
 
     $stmt = Database::getInstance()->prepare("SELECT * FROM domain_data where name = :name LIMIT 1");
     $stmt->bindParam(":name", $domainName);
@@ -14,7 +14,6 @@ if (isset($_GET["domain"])) {
     $domainCount = $stmt->rowCount();
     $databaseDomainData = $stmt->fetch();
 
-    //ALREADY IN DATABASE
     if ($domainCount == 1) {
         $databaseEntryTime = strtotime($databaseDomainData["entryTime"]);
         $time30DaysAgo = strtotime('-4 weeks');
@@ -28,7 +27,6 @@ if (isset($_GET["domain"])) {
     $whois = Factory::get()->createWhois();
     try {
         $response = $whois->loadDomainInfo($domainName);
-        $timestamp = 0;
 
         if ($response->creationDate != null) {
             $timestamp = $response->creationDate;
@@ -41,7 +39,6 @@ if (isset($_GET["domain"])) {
             $stmt = Database::getInstance()->prepare("UPDATE domain_data SET age = ?, entryTime = ? WHERE name = ? LIMIT 1");
             $stmt->execute([$timestamp, $entryTime, $domainName]);
         } else {
-
             $stmt = Database::getInstance()->prepare("INSERT INTO domain_data (name,entryTime,age) VALUES (:name, :entry_time, :age);");
             $stmt->bindParam(":name", $domainName);
             $stmt->bindParam(":entry_time", $entryTime);

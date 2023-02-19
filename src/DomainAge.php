@@ -34,7 +34,7 @@ class DomainAge
 
             if ($timestamp > 10) {
                 self::storeToDatabase($domainName, $timestamp);
-                self::output($timestamp);
+                self::output((string) $timestamp);
             } else {
                 self::output('WHOIS does not provide any Information about the creation- or update- Date', 404);
             }

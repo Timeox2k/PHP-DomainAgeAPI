@@ -16,6 +16,7 @@ class DomainAge
 
     public function getDomainAge()
     {
+        header("Access-Control-Allow-Origin: *");
         $domainName = $this->domainName;
         $stmt = Database::getInstance()->prepare("SELECT * FROM domain_data where name = :name LIMIT 1");
         $stmt->bindParam(":name", $this->domainName);
